@@ -8,6 +8,22 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+
+exports.makeText = (req, res) => {
+  var twilio = require('twilio');
+  var client = new twilio.RestClient(process.env.TWILIO_SID, process.env.TWILIO_TOKEN); 
+  
+  client.messages.create({ 
+      to: "+15044181102", 
+      from: "+19855098046", 
+      body: "Help me, I'm in danger!", 
+  }, function(err, message) { 
+      console.warn(message.sid);
+      console.warn(err);
+  });
+  res.status(200).end();
+};
+
 /**
  * GET /contact
  * Contact form page.
